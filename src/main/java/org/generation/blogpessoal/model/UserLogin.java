@@ -1,17 +1,15 @@
 package org.generation.blogpessoal.model;
 
-public class UserLogin {
-	
-	
-	private String nome;
-	
-	private String usuario;
-	
-	private String senha;
-	
-	private String token;
+public class Userlogin {
 
 	
+	private String nome;
+
+	private String Usuario;
+
+	private String senha;
+
+	private String token;
 
 	public String getNome() {
 		return nome;
@@ -22,11 +20,11 @@ public class UserLogin {
 	}
 
 	public String getUsuario() {
-		return usuario;
+		return Usuario;
 	}
 
 	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+		Usuario = usuario;
 	}
 
 	public String getSenha() {
@@ -49,6 +47,4 @@ public class UserLogin {
 	
 	
 	
-	
-
 }

@@ -29,7 +29,6 @@ public class PostagemController {
     private postagem_repository repositoty;
 
 
-
 	@GetMapping
 	public ResponseEntity<List<Postagem>> GetAll(){
 			

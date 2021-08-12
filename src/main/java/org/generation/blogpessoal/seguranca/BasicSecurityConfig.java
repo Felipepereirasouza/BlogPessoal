@@ -12,39 +12,41 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @EnableWebSecurity
-public class BasicSecurityConfig extends WebSecurityConfigurerAdapter{
+public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
+	private UserDetailsService userDetailsService;
 	
-	private UserDetailsService userdetailsservice;
 	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth)
+			throws Exception {
+			auth.userDetailsService(userDetailsService);
+			auth.inMemoryAuthentication()
+			.withUser("root")
+			.password(passwordEncoder().encode("root"))
+			.authorities("ROLE_USER"); }
 	
-	protected void configure (AuthenticationManagerBuilder auth) throws Exception {
-		
-		auth.userDetailsService(userdetailsservice);
-	}
 	
 	@Bean
-	public PasswordEncoder passwordEncoder () {
+	
+	public PasswordEncoder  passwordEncoder () {
 		
 		return new BCryptPasswordEncoder();
 	}
 	
 	@Override
-	protected void configure (HttpSecurity http) throws Exception { //inicia o http security
+	protected void configure (HttpSecurity http) throws Exception {
 		
-		http.authorizeRequests().antMatchers("/usuarios/logar").permitAll()//End-points com permissão do usuario a mecher sem autenticação
+		http.authorizeRequests()
+		.antMatchers("/usuarios/logar").permitAll()
 		.antMatchers("/usuarios/cadastrar").permitAll()
-		.anyRequest().authenticated().and().httpBasic().and().sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and().cors().and().csrf().disable();
-		
-		
+		.anyRequest().authenticated()
+		.and().httpBasic()
+		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and().cors()
+		.and().csrf().disable();
+	
 	}
-	
-	
-	
-	
-	
 	
 }
